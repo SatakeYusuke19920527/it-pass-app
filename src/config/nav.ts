@@ -3,7 +3,7 @@ import { Layers, LayoutDashboard, StickyNote } from 'lucide-react';
 
 export const navItems: NavItem[] = [
   {
-    title: 'menu1',
+    title: '成績',
     href: '/',
     icon: LayoutDashboard,
   },

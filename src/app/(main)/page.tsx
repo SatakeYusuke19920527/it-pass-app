@@ -35,7 +35,7 @@ const ProgressChart = () => {
 };
 
 export default ProgressChart;
-*/
+
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, BarElement, CategoryScale, LinearScale, LineElement, PointElement,} from 'chart.js';
@@ -45,7 +45,7 @@ import { Line } from 'react-chartjs-2';
 // 登録する要素一覧（PointElement を忘れずに！）
 Chart.register(LineElement, PointElement, CategoryScale, LinearScale);
 
-  /*// APIからデータを取得
+  // APIからデータを取得
   useEffect(() => {
     fetch('/api/user-test-results')  // ← ここはAPIのURLに合わせて変更
       .then(res => res.json())
@@ -55,7 +55,7 @@ Chart.register(LineElement, PointElement, CategoryScale, LinearScale);
   const totalAnswers = testData.reduce((sum, test) => sum + test.correct + test.incorrect, 0);
   const totalCorrect = testData.reduce((sum, test) => sum + test.correct, 0);
   const accuracy = totalAnswers ? ((totalCorrect / totalAnswers) * 100).toFixed(1) : 0;
-  */
+  
 
   //dummyDataを差し替えてねちゃんと覚えててね↓
 const dummyData = [
@@ -111,4 +111,49 @@ const ScoreDashboard = () => {
   );
 };
 
-export default ScoreDashboard;
+export default ScoreDashboard;*/
+//App.tsx
+'use client';
+import React, { useState } from 'react';
+import { Header } from '@/components/layout/Header';
+import { DashboardView } from '@/components/dashboard/DashboardView';
+import { TeamView } from '@/components/dashboard/TeamView';
+import { useAuth } from '@/hooks/useAuth';
+
+function App() {
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'team'>('dashboard');
+  const { currentUser, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">システムを読み込み中...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600">認証に失敗しました。</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header activeTab={activeTab} onTabChange={setActiveTab} />
+      <main>
+        {activeTab === 'dashboard' ? <DashboardView /> : <TeamView />}
+      </main>
+    </div>
+  );
+}
+
+export default App;
+//mockData.tsにAPIをぶち込むんだ🚀
