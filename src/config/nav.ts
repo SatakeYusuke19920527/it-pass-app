@@ -17,4 +17,9 @@ export const navItems: NavItem[] = [
     href: '/users',
     icon: Layers,
   },
+  {
+    title: 'menu4',
+    href: '/others',
+    icon: Layers,
+  },
 ];
